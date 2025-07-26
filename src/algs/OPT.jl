@@ -39,12 +39,12 @@ function compute_ci(σ::Float64, N::Float64, δ::Float64)
     return max(0.0, σ - radius), min(1.0, σ + radius)
 end
 
-function lower_ci(σ::Float64, N::Float64)
-    return clip(σ - 1/sqrt(N), 0.0, 0.5)
+function lower_ci(σ::Float64, N::Float64, δ::Float64)
+  return clip(σ - 1.7 * sqrt(log(log(N) - log(δ)))/sqrt(N), 0.0, 0.5)
 end
 
-function upper_ci(σ::Float64, N::Float64)
-    return clip(σ + 1/sqrt(N), 0.0, 0.5)
+function upper_ci(σ::Float64, N::Float64, δ::Float64)
+    return clip(σ + 4.2 * sqrt(log(log(N) - log(δ)))/sqrt(N), 0.0, 0.5)
 end
 
 function update!(self::OPT, A::Int, R::Real)
@@ -55,8 +55,8 @@ function update!(self::OPT, A::Int, R::Real)
         self.N[A] += 1.0  # Increment count after using old N for mean update
         self.σ²[A] += (1.0 / self.N[A]) * ((R - μA) * (R - self.μ[A]) - self.σ²[A])
 
-        self.σCS[A, 1] = lower_ci(sqrt(self.σ²[A]), self.N[A])
-        self.σCS[A, 2] = upper_ci(sqrt(self.σ²[A]), self.N[A])
+        self.σCS[A, 1] = lower_ci(sqrt(self.σ²[A]), self.N[A], self.δ)
+        self.σCS[A, 2] = upper_ci(sqrt(self.σ²[A]), self.N[A], self.δ)
 
         self.t += 1.0
 

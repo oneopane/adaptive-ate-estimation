@@ -25,7 +25,6 @@ ALG_NAMES = [
     "IPW Neyman Allocation",  
     "NA Est",
     "NeymanAllocationTrueReward",
-    "FTRL"
     ]
 function default_alg_constructor(alg_name::String, num_rounds::Int, m²::Vector{Float64}, means::Vector{Float64}=zeros(2))
     if alg_name == "ClipSMT"
@@ -47,8 +46,6 @@ function default_alg_constructor(alg_name::String, num_rounds::Int, m²::Vector{
         return NeymanAllocationEstimateReward(σ²)
     elseif alg_name == "NeymanAllocationTrueReward"
         return NeymanAllocationTrueReward(m² .- means.^2, means)
-    elseif alg_name == "FTRL"
-        return FTRL()
     else
         throw(ArgumentError("Unknown algorithm name: $alg_name\nValid names: $ALG_NAMES"))
     end
@@ -95,6 +92,5 @@ include("fixed_aipw.jl")  # New file for fixed AIPW algorithms
 include("EtC.jl")
 include("clipSDT.jl")
 include("OPT.jl")
-include("ftrl.jl")
 
 end # module Algorithms

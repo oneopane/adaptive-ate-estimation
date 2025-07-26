@@ -17,7 +17,7 @@ using Statistics
 const P = [0.5, 0.5]
 const TRUE_ATE = P[TREATMENT] - P[CONTROL]
 const NUM_ROUNDS = 1000
-const NUM_SIMS = 1000000
+const NUM_SIMS = 1000
 
 function plot_pi_trajectories(πs_matrix, alg)
     p = plot(

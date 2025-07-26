@@ -12,6 +12,7 @@ Pkg.add("Serialization");
 Pkg.add("Distributed");
 Pkg.add("IterTools");
 Pkg.add("ProgressMeter")
+Pkg.add("StaticArrays")
 ```
 
 Then you can run `julia -t <num_threads> alg_comparison.jl` to run the simulations.
